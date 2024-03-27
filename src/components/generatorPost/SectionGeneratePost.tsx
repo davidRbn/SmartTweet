@@ -2,7 +2,7 @@ import { useState } from "react";
 import GeneratorPost from "./GeneratorPost";
 import PostGenerate from "./PostGenerate";
 
-const SectionGenerateImage = () => {
+const SectionGeneratePost = () => {
   const [postGenerated, setPostGenerated] = useState<string | null>(null);
 
   return (
@@ -16,4 +16,4 @@ const SectionGenerateImage = () => {
   );
 };
 
-export default SectionGenerateImage;
+export default SectionGeneratePost;

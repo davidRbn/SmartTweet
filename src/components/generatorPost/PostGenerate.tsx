@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CardWrapper from "../CardWrapper/CardWrapper";
 
 type PropsPostGenerate = {
@@ -6,10 +6,20 @@ type PropsPostGenerate = {
 };
 
 const PostGenerate: React.FC<PropsPostGenerate> = ({ postGenerated }) => {
+  const [editedText, setEditedText] = useState(postGenerated || "");
+
+  const handleTextChange = (event: React.ChangeEvent<HTMLDivElement>) => {
+    const newText = event.target.textContent || "";
+    setEditedText(newText);
+  };
   return (
     <CardWrapper>
       <div>
-        <span>{postGenerated}</span>
+        <div
+          contentEditable
+          onInput={handleTextChange}
+          dangerouslySetInnerHTML={{ __html: editedText }}
+        ></div>
       </div>
     </CardWrapper>
   );

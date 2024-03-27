@@ -2,6 +2,7 @@ import { Dispatch, FC, SetStateAction, useContext, useState } from "react";
 import CardWrapper from "../CardWrapper/CardWrapper";
 import { CreditContext } from "../Context/CreditContext";
 import Modal from "../Modal/Modal";
+import SectionTypePost from "./TypePost/SectionTypePost";
 
 type PropsGeneratorPost = {
   postGenerated: string | null;
@@ -16,9 +17,8 @@ const GeneratorPost: FC<PropsGeneratorPost> = ({
   const [creditLimit, setCreditlimit] = useState<boolean>(false);
   const { removeCredit, credit } = useContext(CreditContext);
 
-  // "Je recherche un tweet optimisé pour captiver mon public et susciter leur engagement, tout en respectant les normes de Twitter en termes de longueur et de ton. Mon objectif est d'inclure un maximum de détails pour attirer efficacement l'attention de mon audience.Personnalisez les tweets en fonction des informations fournies par les utilisateurs",
-
-  const fetchTwitterPost = async (post: string) => {
+  // "Je recherche un tweet optimisé pour captiver mon public et susciter leur engagement, tout en respectant les normes de Twitter en termes de longueur.Tu utiliseras un ton ${type} Mon objectif est d'inclure un maximum de détails pour attirer efficacement l'attention de mon audience.Personnalisez les tweets en fonction des informations fournies par les utilisateurs",
+  const fetchTwitterPost = async (post: string, type: string) => {
     setLoadingPost(true);
     await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST", // or 'PUT'
@@ -30,8 +30,7 @@ const GeneratorPost: FC<PropsGeneratorPost> = ({
         messages: [
           {
             role: "system",
-            content:
-              "I'm looking for a tweet optimized to captivate my audience and encourage their engagement, all while adhering to Twitter's standards in terms of length and tone. My goal is to include as many details as possible to effectively grab my audience's attention. Customize the tweets based on the information provided by the users.",
+            content: `I'm looking for a tweet optimized to captivate my audience and elicit their engagement, while adhering to Twitter's length standards. You will use a ${type} tone. My goal is to include maximum details to effectively grab my audience's attention. Customize the tweets based on the information provided by users.I'll detect the language of your next request and respond in the same language`,
           },
           {
             role: "user",
@@ -42,8 +41,6 @@ const GeneratorPost: FC<PropsGeneratorPost> = ({
       }),
     })
       .then((res) => {
-        console.log(res);
-
         return res.json();
       })
       .then((data) => {
@@ -71,9 +68,10 @@ const GeneratorPost: FC<PropsGeneratorPost> = ({
     }
     const form = e.target;
     const formData = new FormData(form as HTMLFormElement);
+    const type = formData.get("tweetType")?.toString() || "";
     const post = formData.get("generator")?.toString() || "";
 
-    post !== "" && fetchTwitterPost(post);
+    post !== "" && fetchTwitterPost(post, type);
     return;
   };
 
@@ -83,6 +81,7 @@ const GeneratorPost: FC<PropsGeneratorPost> = ({
         <div className="m-auto flex flex-col justify-center">
           <span className="mb-2">Transform your text into a post</span>
           <form onSubmit={generatePost}>
+            <SectionTypePost />
             <textarea
               className="border min-h-80 w-full "
               name="generator"

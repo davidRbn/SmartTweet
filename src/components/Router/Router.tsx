@@ -3,11 +3,11 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import Home from "../Home/Home";
 import LoginSection from "../Login/LoginSection";
 import Header from "../Header/Header";
-import MailSignup from "../../mailSignup/MailSignup";
-import SectionGenerateImage from "../generatorPost/SectionGenerateImage";
+import MailSignup from "../mailSignup/MailSignup";
 import { AuthProvider } from "../Context/AuthContext";
 import Settings from "../Settings/Settings";
 import { CreditProvider } from "../Context/CreditContext";
+import SectionGeneratePost from "../generatorPost/SectionGeneratePost";
 
 type ToggleSigninSignup = "SIGNIN" | "SIGNUP" | "LOGIN";
 
@@ -40,10 +40,7 @@ const Router: React.FC = () => {
                 }
               />
               <Route path="/login/email-signup" element={<MailSignup />} />
-              <Route
-                path="/generate-image"
-                element={<SectionGenerateImage />}
-              />
+              <Route path="/generate-image" element={<SectionGeneratePost />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </CreditProvider>

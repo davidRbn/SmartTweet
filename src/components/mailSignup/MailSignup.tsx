@@ -1,7 +1,7 @@
 import { getAuth } from "firebase/auth";
-import useEmailVerification from "../components/hook/verificationEmail";
-import emailImage from "../assets/email.jpg";
-import CardWrapper from "../components/CardWrapper/CardWrapper";
+import useEmailVerification from "../hook/verificationEmail";
+import emailImage from "../../assets/email.jpg";
+import CardWrapper from "../CardWrapper/CardWrapper";
 
 const MailSignup = () => {
   const { verificationEmail } = useEmailVerification();

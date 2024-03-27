@@ -46,7 +46,6 @@ export const CreditProvider: React.FC<{ children: ReactNode }> = ({
     })
       .then(() => {
         getCredit();
-        console.log("Document successfully updated!");
       })
       .catch((error) => {
         // The document probably doesn't exist.
